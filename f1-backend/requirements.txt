@@ -1,6 +1,9 @@
-fastapi
+fastapi[standard]
 uvicorn
 fastf1
 pandas
 numpy
 websockets
+scipy
+requests-cache
+python-multipart
