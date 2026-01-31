@@ -1,0 +1,8 @@
+# Python System Files
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# FastF1 Data Cache (Large files)
+cache/

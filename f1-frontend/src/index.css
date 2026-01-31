@@ -1,0 +1,405 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* F1 Race Visualization Design System */
+
+@layer base {
+  :root {
+    /* Core Dark Theme */
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+
+    /* Panel Surfaces */
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 95%;
+    --card-elevated: 0 0% 10%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 95%;
+
+    /* Primary - Racing Red Accent */
+    --primary: 0 85% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Dark Panel */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 85%;
+
+    /* Muted Elements */
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 55%;
+
+    /* Accent - Subtle Highlight */
+    --accent: 0 0% 18%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 84% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 30%;
+
+    --radius: 0.375rem;
+
+    /* ===== F1 SPECIFIC TOKENS ===== */
+    
+    /* Tyre Compounds */
+    --tyre-soft: 0 75% 55%;
+    --tyre-medium: 45 100% 55%;
+    --tyre-hard: 0 0% 90%;
+    --tyre-inter: 120 50% 45%;
+    --tyre-wet: 210 80% 50%;
+
+    /* Telemetry */
+    --throttle: 130 70% 45%;
+    --brake: 0 85% 55%;
+    --drs-active: 130 80% 50%;
+    --drs-inactive: 0 0% 30%;
+
+    /* Car Health */
+    --health-good: 130 70% 45%;
+    --health-stressed: 45 100% 55%;
+    --health-critical: 0 85% 55%;
+
+    /* Position Colors */
+    --position-first: 45 100% 55%;
+    --position-podium: 0 0% 70%;
+    --position-points: 210 60% 50%;
+
+    /* Track */
+    --track-surface: 0 0% 25%;
+    --track-kerb-red: 0 85% 50%;
+    --track-kerb-white: 0 0% 95%;
+
+    /* Driver Selection */
+    --driver-selected: 0 85% 55%;
+    --driver-highlight: 45 100% 55%;
+
+    /* Sector Timing */
+    --sector-purple: 280 80% 55%;
+    --sector-green: 130 70% 45%;
+    --sector-yellow: 45 100% 55%;
+
+    /* Weather */
+    --weather-clear: 45 100% 55%;
+    --weather-cloudy: 0 0% 60%;
+    --weather-rain: 210 80% 50%;
+    
+    /* Gradients */
+    --gradient-panel: linear-gradient(180deg, hsl(0 0% 8%) 0%, hsl(0 0% 5%) 100%);
+    --gradient-hud: linear-gradient(180deg, hsl(0 0% 10% / 0.95) 0%, hsl(0 0% 6% / 0.98) 100%);
+    --gradient-leaderboard-header: linear-gradient(90deg, hsl(0 85% 50% / 0.15) 0%, transparent 100%);
+    
+    /* Shadows */
+    --shadow-panel: 0 4px 24px hsl(0 0% 0% / 0.5);
+    --shadow-glow-red: 0 0 20px hsl(0 85% 50% / 0.3);
+    --shadow-glow-drs: 0 0 15px hsl(130 80% 50% / 0.4);
+
+    /* Sidebar - Dark variant */
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 0 85% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 30%;
+  }
+
+  .dark {
+    /* Already dark by default */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* F1 Display Font */
+  .font-display {
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  /* Racing Numbers */
+  .font-mono-racing {
+    font-family: 'Orbitron', 'SF Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* Tyre Compound Badges */
+  .tyre-soft {
+    @apply rounded-full;
+    background-color: hsl(var(--tyre-soft));
+    box-shadow: 0 0 8px hsl(var(--tyre-soft) / 0.5);
+  }
+
+  .tyre-medium {
+    @apply rounded-full;
+    background-color: hsl(var(--tyre-medium));
+    box-shadow: 0 0 8px hsl(var(--tyre-medium) / 0.5);
+  }
+
+  .tyre-hard {
+    @apply rounded-full;
+    background-color: hsl(var(--tyre-hard));
+  }
+
+  .tyre-inter {
+    @apply rounded-full;
+    background-color: hsl(var(--tyre-inter));
+    box-shadow: 0 0 8px hsl(var(--tyre-inter) / 0.5);
+  }
+
+  .tyre-wet {
+    @apply rounded-full;
+    background-color: hsl(var(--tyre-wet));
+    box-shadow: 0 0 8px hsl(var(--tyre-wet) / 0.5);
+  }
+
+  /* Sector Timing */
+  .sector-purple {
+    background-color: hsl(var(--sector-purple));
+    color: hsl(0 0% 100%);
+    box-shadow: 0 0 10px hsl(var(--sector-purple) / 0.5);
+  }
+
+  .sector-green {
+    background-color: hsl(var(--sector-green));
+    color: hsl(0 0% 100%);
+    box-shadow: 0 0 10px hsl(var(--sector-green) / 0.5);
+  }
+
+  /* Telemetry Bars */
+  .throttle-bar {
+    background: linear-gradient(90deg, hsl(var(--throttle)) 0%, hsl(130 90% 55%) 100%);
+    box-shadow: 0 0 10px hsl(var(--throttle) / 0.5);
+  }
+
+  .brake-indicator {
+    background-color: hsl(var(--brake));
+    box-shadow: 0 0 12px hsl(var(--brake) / 0.6);
+  }
+
+  .brake-indicator-off {
+    background-color: hsl(0 0% 20%);
+  }
+
+  /* DRS States */
+  .drs-open {
+    color: hsl(var(--drs-active));
+    text-shadow: 0 0 10px hsl(var(--drs-active) / 0.6);
+  }
+
+  .drs-closed {
+    color: hsl(var(--drs-inactive));
+  }
+
+  /* DRS Battles */
+  .battle-line {
+    stroke: hsl(var(--drs-active) / 0.25);
+    stroke-width: 2.5;
+  }
+
+  .battle-line-low {
+    stroke: hsl(var(--drs-active) / 0.18);
+  }
+
+  .battle-line-medium {
+    stroke: hsl(var(--drs-active) / 0.32);
+  }
+
+  .battle-line-high {
+    stroke: hsl(var(--drs-active) / 0.5);
+  }
+
+  .battle-ring {
+    stroke: hsl(var(--drs-active) / 0.85);
+    fill: none;
+    filter: drop-shadow(0 0 10px hsl(var(--drs-active) / 0.35));
+  }
+
+  .battle-tag {
+    fill: hsl(var(--drs-active));
+    opacity: 0.9;
+  }
+
+  .battle-pill {
+    color: hsl(var(--drs-active));
+    opacity: 0.9;
+  }
+
+  /* Panel Styles */
+  .panel-dark {
+    background: var(--gradient-panel);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-panel);
+  }
+
+  .panel-hud {
+    background: var(--gradient-hud);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid hsl(0 0% 20%);
+  }
+
+  /* Leaderboard Row Styles */
+  .leaderboard-row {
+    @apply transition-all duration-200;
+  }
+
+  .leaderboard-row:hover {
+    background-color: hsl(0 0% 12%);
+  }
+
+  .leaderboard-row-selected {
+    background: var(--gradient-leaderboard-header);
+    border-left: 3px solid hsl(var(--driver-selected));
+  }
+
+  /* Driver Dot on Track */
+  .driver-dot {
+    @apply rounded-full;
+    box-shadow: 0 0 8px currentColor;
+    transition: all 0.3s ease-out;
+  }
+
+  .driver-dot-selected {
+    box-shadow: 0 0 16px hsl(var(--driver-selected)), 0 0 32px hsl(var(--driver-selected) / 0.5);
+  }
+
+  /* Health Indicators */
+  .health-good {
+    color: hsl(var(--health-good));
+  }
+
+  .health-stressed {
+    color: hsl(var(--health-stressed));
+  }
+
+  .health-critical {
+    color: hsl(var(--health-critical));
+    animation: pulse-critical 1s ease-in-out infinite;
+  }
+
+  /* Quote Text Style */
+  .quote-text {
+    @apply font-display tracking-wide;
+    background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 70%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* CTA Button */
+  .btn-cta {
+    @apply px-8 py-4 font-display font-semibold tracking-widest uppercase;
+    background: linear-gradient(135deg, hsl(0 85% 50%) 0%, hsl(0 75% 40%) 100%);
+    border: 1px solid hsl(0 85% 60% / 0.3);
+    box-shadow: 0 4px 20px hsl(0 85% 50% / 0.3), inset 0 1px 0 hsl(0 85% 70% / 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px hsl(0 85% 50% / 0.4), inset 0 1px 0 hsl(0 85% 70% / 0.3);
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 font-display font-medium tracking-wider uppercase text-sm;
+    color: hsl(0 0% 60%);
+    border: 1px solid hsl(0 0% 25%);
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    color: hsl(0 0% 90%);
+    border-color: hsl(0 0% 40%);
+  }
+
+  /* Track Styling */
+  .track-surface {
+    stroke: hsl(var(--track-surface));
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .track-kerb {
+    stroke-dasharray: 8 8;
+  }
+}
+
+@layer utilities {
+  /* Smooth track camera movement */
+  .camera-smooth {
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* Zoom levels */
+  .zoom-battle {
+    transform: scale(1.8);
+  }
+
+  .zoom-normal {
+    transform: scale(1);
+  }
+
+  .zoom-wide {
+    transform: scale(0.8);
+  }
+
+  /* Fade animations */
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .fade-in-delayed {
+    animation: fadeInUp 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+  }
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-critical {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes driver-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
