@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { 
   RaceDataAdapter,
   SessionInfo, 
@@ -8,8 +8,6 @@ import type {
 import type { 
   RaceSnapshot
 } from '@/types/race';
-
-
 
 import { createLiveAdapter } from '@/adapters/liveAdapter';
 import { createMockAdapter } from '@/adapters/mockAdapter';
@@ -44,11 +42,19 @@ export function useRaceData(options: UseRaceDataOptions = {}): UseRaceDataReturn
 
   // Initialize Adapter based on mode
   useEffect(() => {
-    const config: AdapterConfig = {
-        apiUrl: 'http://localhost:8000/api',
-        wsUrl: 'ws://localhost:8000/ws/race'
-    };
+    // --- DYNAMIC URL LOGIC ---
+    // 1. Prioritize Render Environment Variable
+    // 2. Fallback to localhost for development
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
     
+    // 3. Auto-convert HTTPS to WSS for secure production WebSockets
+    const WS_BASE = API_BASE.replace('https://', 'wss://').replace('http://', 'ws://');
+
+    const config: AdapterConfig = {
+        apiUrl: `${API_BASE}/api`,
+        wsUrl: `${WS_BASE}/ws/race`
+    };
+
     const newAdapter = mode === 'live' 
         ? createLiveAdapter(config) 
         : createMockAdapter(config);
@@ -56,7 +62,6 @@ export function useRaceData(options: UseRaceDataOptions = {}): UseRaceDataReturn
     setAdapter(newAdapter);
 
     // --- SNAPSHOT HANDLER ---
-    // This updates the entire state (Drivers + Strategy + Physics) in one go
     const unsubData = newAdapter.onData((newSnapshot: RaceSnapshot) => {
       setSnapshot(newSnapshot);
     });
@@ -79,7 +84,7 @@ export function useRaceData(options: UseRaceDataOptions = {}): UseRaceDataReturn
     };
   }, [mode, initialSessionId, autoConnect]);
 
-  // Fetch Session List (Year/Round chooser)
+  // Fetch Session List
   const refreshSessions = useCallback(async () => {
     if (!adapter) return;
     setLoadingSessions(true);
@@ -99,7 +104,7 @@ export function useRaceData(options: UseRaceDataOptions = {}): UseRaceDataReturn
 
   const connect = useCallback(async (sid: string) => {
     if (adapter) {
-      setSnapshot(null); // Clear old data before new connection
+      setSnapshot(null); 
       await adapter.connect(sid);
     }
   }, [adapter]);
